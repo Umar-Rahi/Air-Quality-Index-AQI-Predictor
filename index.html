@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Air Quality Index Predictor</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container-fluid">
+        <!-- Header -->
+        <header class="row bg-primary text-white py-3 mb-4">
+            <div class="col-12 text-center">
+                <h1 class="display-4 mb-0">
+                    <i class="fas fa-wind me-3"></i>
+                    Air Quality Index Predictor
+                </h1>
+                <p class="lead mb-0">Predict AQI based on pollutant concentrations</p>
+            </div>
+        </header>
+
+        <div class="row">
+            <!-- Input Form -->
+            <div class="col-lg-6 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-light">
+                        <h3 class="card-title mb-0">
+                            <i class="fas fa-sliders-h me-2"></i>
+                            Input Parameters
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <form id="aqiForm">
+                            <!-- Particulate Matter -->
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="pm25" class="form-label">
+                                        PM2.5 (μg/m³)
+                                        <i class="fas fa-info-circle text-info" title="Fine particulate matter"></i>
+                                    </label>
+                                    <input type="number" class="form-control" id="pm25" name="pm25" 
+                                           step="0.1" min="0" max="500" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="pm10" class="form-label">
+                                        PM10 (μg/m³)
+                                        <i class="fas fa-info-circle text-info" title="Coarse particulate matter"></i>
+                                    </label>
+                                    <input type="number" class="form-control" id="pm10" name="pm10" 
+                                           step="0.1" min="0" max="600" required>
+                                </div>
+                            </div>
+
+                            <!-- Gases -->
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="no2" class="form-label">
+                                        NO₂ (ppb)
+                                        <i class="fas fa-info-circle text-info" title="Nitrogen dioxide"></i>
+                                    </label>
+                                    <input type="number" class="form-control" id="no2" name="no2" 
+                                           step="0.1" min="0" max="200" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="so2" class="form-label">
+                                        SO₂ (ppb)
+                                        <i class="fas fa-info-circle text-info" title="Sulfur dioxide"></i>
+                                    </label>
+                                    <input type="number" class="form-control" id="so2" name="so2" 
+                                           step="0.1" min="0" max="100" required>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="co" class="form-label">
+                                        CO (ppm)
+                                        <i class="fas fa-info-circle text-info" title="Carbon monoxide"></i>
+                                    </label>
+                                    <input type="number" class="form-control" id="co" name="co" 
+                                           step="0.1" min="0" max="50" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="o3" class="form-label">
+                                        O₃ (ppb)
+                                        <i class="fas fa-info-circle text-info" title="Ozone"></i>
+                                    </label>
+                                    <input type="number" class="form-control" id="o3" name="o3" 
+                                           step="0.1" min="0" max="300" required>
+                                </div>
+                            </div>
+
+                            <!-- Weather -->
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <label for="temperature" class="form-label">
+                                        Temperature (°C)
+                                        <i class="fas fa-thermometer-half text-info" title="Ambient temperature"></i>
+                                    </label>
+                                    <input type="number" class="form-control" id="temperature" name="temperature" 
+                                           step="0.1" min="-50" max="60" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="humidity" class="form-label">
+                                        Humidity (%)
+                                        <i class="fas fa-tint text-info" title="Relative humidity"></i>
+                                    </label>
+                                    <input type="number" class="form-control" id="humidity" name="humidity" 
+                                           step="0.1" min="0" max="100" required>
+                                </div>
+                            </div>
+
+                            <!-- Buttons -->
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                <button type="button" class="btn btn-outline-secondary" id="loadSampleBtn">
+                                    <i class="fas fa-download me-2"></i>
+                                    Load Sample Data
+                                </button>
+                                <button type="button" class="btn btn-warning" id="clearBtn">
+                                    <i class="fas fa-eraser me-2"></i>
+                                    Clear
+                                </button>
+                                <button type="submit" class="btn btn-primary" id="predictBtn">
+                                    <i class="fas fa-calculator me-2"></i>
+                                    Predict AQI
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results and Visualization -->
+            <div class="col-lg-6 mb-4">
+                <!-- Results Card -->
+                <div class="card shadow-sm mb-4">
+                    <div class="card-header bg-light">
+                        <h3 class="card-title mb-0">
+                            <i class="fas fa-chart-line me-2"></i>
+                            Prediction Results
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <div id="resultsContainer" class="text-center d-none">
+                            <div class="aqi-display mb-3">
+                                <div class="aqi-value" id="aqiValue">--</div>
+                                <div class="aqi-label">AQI</div>
+                            </div>
+                            <div class="aqi-category mb-3">
+                                <span class="badge fs-6 px-3 py-2" id="aqiCategory">--</span>
+                            </div>
+                            <div class="aqi-description" id="aqiDescription">
+                                Enter pollutant data and click "Predict AQI" to see results
+                            </div>
+                        </div>
+                        <div id="loadingContainer" class="text-center d-none">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <p class="mt-2">Calculating AQI...</p>
+                        </div>
+                        <div id="errorContainer" class="text-center d-none">
+                            <div class="alert alert-danger" role="alert">
+                                <i class="fas fa-exclamation-triangle me-2"></i>
+                                <span id="errorMessage">An error occurred</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chart Card -->
+                <div class="card shadow-sm">
+                    <div class="card-header bg-light">
+                        <h3 class="card-title mb-0">
+                            <i class="fas fa-chart-bar me-2"></i>
+                            Pollutant Levels
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="pollutantChart" width="400" height="200"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sample Data Modal -->
+        <div class="modal fade" id="sampleDataModal" tabindex="-1">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            <i class="fas fa-database me-2"></i>
+                            Sample Data Sets
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row" id="sampleDataContainer">
+                            <!-- Sample data cards will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="row bg-dark text-white py-3 mt-5">
+            <div class="col-12 text-center">
+                <p class="mb-0">
+                    <i class="fas fa-leaf me-2"></i>
+                    Air Quality Index Predictor - Powered by Machine Learning
+                </p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
