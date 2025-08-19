@@ -237,15 +237,15 @@ def not_found(error):
 @app.errorhandler(500)
 def internal_error(error):
     return jsonify({'error': 'Internal server error'}), 500
-
 if __name__ == '__main__':
     # Load model on startup
     if not load_model():
-        print("WARNING: Model files not found. Please run 'python model_train.py' first.")
-        print("The server will start but predictions will not work until the model is trained.")
-    
+        print("WARNING: Model files not found. Please run 'python model_train.py' first or generate them in Render build.")
+
     print("Starting Flask server...")
 
-    # Get port from environment (Render provides it automatically)
+    # Use Render’s port
     port = int(os.environ.get("PORT", 5000))
-    app.run(debug=False, host='0.0.0.0', port=port)
+    app.run(host="0.0.0.0", port=port, debug=False)
+
+
