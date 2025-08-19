@@ -2,6 +2,12 @@
 
 ## 🌐 Live Demo ([https://umar-rahi.github.io](https://umar-rahi.github.io/Air-Quality-Index-AQI-Predictor/)
 
+## ⚠️ Important Note
+
+This project is a **Flask-based web application**.  
+The prediction feature will **not work** if you only open `index.html` in your browser,  
+because it requires the **Flask server (Python backend)** to be running.  
+
 ![Python](https://img.shields.io/badge/Python-3.7%2B-blue.svg)  
 ![Flask](https://img.shields.io/badge/Flask-2.x-green.svg)  
 ![scikit-learn](https://img.shields.io/badge/scikit--learn-ML-orange.svg)  
