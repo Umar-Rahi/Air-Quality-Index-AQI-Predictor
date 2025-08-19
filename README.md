@@ -1,5 +1,8 @@
 # Air Quality Index (AQI) Predictor
 
+## 🌐 Live Demo
+[Visit my Portfolio](https://umar-rahi.github.io)
+
 ![Python](https://img.shields.io/badge/Python-3.7%2B-blue.svg)  
 ![Flask](https://img.shields.io/badge/Flask-2.x-green.svg)  
 ![scikit-learn](https://img.shields.io/badge/scikit--learn-ML-orange.svg)  
