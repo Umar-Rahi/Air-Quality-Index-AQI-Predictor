@@ -245,7 +245,7 @@ if __name__ == '__main__':
         print("The server will start but predictions will not work until the model is trained.")
     
     print("Starting Flask server...")
-    print("Open http://localhost:5000 in your browser")
-    
-    # Run the app
-    app.run(debug=True, host='0.0.0.0', port=5000)
+
+    # Get port from environment (Render provides it automatically)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(debug=False, host='0.0.0.0', port=port)
