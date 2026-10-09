@@ -1,6 +1,6 @@
 # Air Quality Index (AQI) Predictor
 
-## 🌐 Live Demo ([https://umar-rahi.github.io](https://umar-rahi.github.io/Air-Quality-Index-AQI-Predictor/)
+## 🌐 Live Demo [https://umar-rahi.github.io](https://umar-rahi.github.io/Air-Quality-Index-AQI-Predictor/
 
 ## ⚠️ Important Note
 
