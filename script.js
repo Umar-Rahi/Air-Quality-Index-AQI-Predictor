@@ -2,7 +2,7 @@
 
 class AQIPredictor {
     constructor() {
-        this.apiBaseUrl = '/api';
+        this.apiBaseUrl = 'https://air-quality-index-aqi-predictor-2-6tr8.onrender.com/api';
         this.chart = null;
         this.sampleData = [];
         
