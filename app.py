@@ -52,6 +52,13 @@ def load_model():
         logger.error(f"Error loading model: {str(e)}")
         return False
 
+
+# Load the model when this module is imported (also used by Gunicorn).
+# Render runs model_train.py during the build, so these files should exist.
+if not load_model():
+    logger.warning("Model files are unavailable; prediction endpoints will not work until they are generated.")
+
+
 def get_aqi_category(aqi):
     """Get AQI category based on AQI value"""
     if aqi <= 50:
@@ -239,11 +246,6 @@ def internal_error(error):
     return jsonify({'error': 'Internal server error'}), 500
 
 if __name__ == '__main__':
-    # Load model on startup
-    if not load_model():
-        print("WARNING: Model files not found. Please run 'python model_train.py' first.")
-        print("The server will start but predictions will not work until the model is trained.")
-    
     print("Starting Flask server...")
     print("Open http://localhost:5000 in your browser")
     
