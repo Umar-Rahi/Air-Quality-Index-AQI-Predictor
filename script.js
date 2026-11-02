@@ -2,7 +2,7 @@
 
 class AQIPredictor {
     constructor() {
-        this.apiBaseUrl = 'http://localhost:5000/api';
+        this.apiBaseUrl = '/api';
         this.chart = null;
         this.sampleData = [];
         
